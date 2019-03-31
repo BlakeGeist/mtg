@@ -1,0 +1,37 @@
+{{>templates/open page='home'}}
+
+{{>templates/header}}
+
+<main class="index-page">
+
+  <div class="container">
+
+    <h1>{{siteSettings.name}}</h1>
+
+    <div class="cards">
+
+      {{#each fireBaseData as |card index|}}
+
+        <div class="cards-card">
+
+          <div class="cards-card-name">{{card.name}}</div>
+
+          <div class="cards-card-img">
+
+            <img src="{{card.imageUrl}}" />
+
+          </div>
+
+        </div>
+
+      {{/each}}
+
+    </div>
+
+  </div>
+
+</main>
+
+{{>templates/footer}}
+
+{{>templates/close}}

@@ -1,0 +1,182 @@
+{
+  "env": "preprod",
+  "logLevel": "info",
+  "host": "https://stageapi.yellow.com",
+  "api": {
+    "url": "https://stageapi.yellow.com",
+    "internalUrl": "https://stageapi.yellow.com",
+    "port": 8080
+  },
+  "notification": {
+    "path_data": "/home/node-app-files/data",
+    "smtpConfig": {
+        "host": "smtp.gmail.com",
+        "port": 465,
+        "secure": true,
+        "auth": {
+            "user": "***@gmail.com",
+            "pass": "****"
+        }
+      }
+  },
+  "data_api": {
+    "url": "https://stagedata.yellow.com",
+    "internalUrl": "http://internal-stage-date-private-413660773.us-east-1.elb.amazonaws.com",
+    "port": 8080,
+    "auth": {
+      "user": "yellowStageData",
+      "pass": "M2$%_&8&_@S/Wug8>.K6b6-HTjy%Ex"
+    },
+    "admin": {
+      "user": "yellowStageAdmin",
+      "pass": "=vj{y.}7K*$EvWF3YPA5Xaa.$WU+w3"
+    }
+  },
+  "urls": {
+    "site": "https://alpha.yellow.com/",
+    "api": "https://stageapi.yellow.com/",
+    "loginRedirect": "https://alpha.dubli.com"
+  },
+  "allowedCorsOrigins": [
+    "https://us-central1-mtg-collections.cloudfunctions.net"
+  ],
+  "whitelabel": {
+    "defaults": {
+      "settings": {
+        "languages": ["da", "de", "en", "es", "fr", "kr", "it", "pt", "ru","jp","ar"],
+        "currencies": ["eur", "usd", "inr", "aud", "gbp", "btc", "brl", "krw"],
+        "defaultRegion": "us",
+        "defaultLanguage": "en",
+        "defaultCurrency": "usd",
+        "seoCanonicalDomain": "yellow.com",
+        "seoCanonicalLanguage": "en",
+        "seoCanonicalRegion": "us",
+        "allowCrawling": false,
+        "useSitemap": false
+      }
+    },
+    "black": {
+      "slug": "black",
+      "name": "black",
+      "org": "black, Inc.",
+      "domain": "alpha.black.com",
+      "domain-fancy": "Alpha.black.com",
+      "email": "account@black.com",
+      "outgoingEmailAddress": "black <account@black.com>",
+      "blogLink": "http://blog.black.com",
+      "emailSubjects": {
+        "registration": "Welcome to black",
+        "passwordReset": "Reset your black password",
+        "resendActivation": "Your black activation link",
+        "vipReceipt": "Welcome to VIP",
+        "withdrawalProcessed": "Your Cash Back Withdrawal Request Has Been Completed!"
+      },
+      "investorRelations": "https://black.com/",
+      "address": {
+        "line-1": "1234 Fake St",
+        "line-2": "Redding, CA 98632"
+      },
+      "google": {
+        "trackingId": "XXXX",
+        "verificationId": "XXXX"
+      },
+      "oauth": {
+      },
+      "loginRedirect": "login-redirect-url-black",
+      "defaultReferrerId": 79,
+      "social": {
+        "facebook": {
+          "link": "DubLi.Funshopping"
+        },
+        "google-plus": {
+          "link": "103539925573736173553"
+        },
+        "twitter": {
+          "link": "DubLi"
+        },
+        "instagram": {
+          "link": "DubLi"
+        },
+        "pinterest": {
+          "link": "DubLi"
+        },
+        "youtube": {
+          "link": "UCg31GnWcFGF5B-qCE_dy4xQ"
+        }
+      },
+      "support": {
+        "link": "support.dubli.com"
+      },
+      "settings": {
+        "languages": ["da", "de", "en", "es", "fr", "kr", "it", "pt", "ru","jp","ar"],
+        "currencies": ["eur", "usd", "inr", "aud", "gbp", "btc", "brl", "krw"],
+        "defaultRegion": "us",
+        "defaultLanguage": "en",
+        "defaultCurrency": "usd",
+        "seoCanonicalDomain": "dubli.com"
+      }
+    }
+  },
+  "dataStore": {
+    "publicCache": {
+      "hosts": [
+        "127.0.0.1:11211"
+      ],
+      "poolSize": 5
+    },
+    "privateCache": {
+      "hosts": [
+        "127.0.0.1:11211"
+      ],
+      "poolSize": 5
+    },
+    "redis": {
+      "writer": {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "auth": null
+      },
+      "reader": {
+        "host": "127.0.0.1",
+        "port": 6379,
+        "auth": null
+      }
+    },
+    "reader": {
+      "host": "127.0.0.1",
+      "port": 3306,
+      "user": "local-data",
+      "password": "local-data",
+      "database": "data",
+      "poolSize": 5,
+      "ssl": null
+    },
+    "writer": {
+      "host": "127.0.0.1",
+      "port": 3306,
+      "user": "local-data",
+      "password": "local-data",
+      "database": "data",
+      "poolSize": 5,
+      "ssl": null
+    }
+  },
+  "jwt": {
+    "key": "secret",
+    "lowExpireInMinutes": 43830,
+    "highExpireInMinutes": 60
+  },
+  "paymentGateways": {
+    "stripe": {
+      "api_key": "XXXX",
+      "api_secret": "XXXX"
+    },
+    "paypal": {
+      "client_id": "XXXX",
+      "client_secret": "XXXX-SgAXSCqRJhdnHHYJg8pntWaTrsgWoTcULH",
+      "mode": "sandbox"
+    }
+  },
+  "thirdPartyApi": {
+  }
+}

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html
+  class="layout-{{siteSettings.layoutType}} region-{{settings.region}} lang-{{settings.language}} logged-out" {{#is settings.language 'ar'}}dir="rtl"{{/is}} lang="{{settings.language}}-{{settings.region}}">
+
+  <head>
+
+    <script src="https://www.gstatic.com/firebasejs/5.9.0/firebase.js"></script>
+
+    {{! cononical link}}
+    {{#if pageSettings.canonicalUrl}}
+      <link rel="canonical" href="{{pageSettings.canonicalUrl}}">
+    {{/if}}
+
+    <meta http-equiv="content-language" content="{{settings.language}}-{{settings.region}}">
+
+    <meta charset="utf-8">
+    {{! google verification}}
+    {{#if settings.wlTrackingGoogleVerificationId}}
+      <meta name="google-site-verification" content="{{settings.wlTrackingGoogleVerificationId}}" />
+    {{/if}}
+
+
+    <link href="/assets/css/main.css" rel="stylesheet" type="text/css">
+
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
+
+
+    <meta http-equiv="Cache-control" content="public">
+
+    {{! page css}}
+    {{#if pageSettings.css}}
+
+      <link href="{{#if data.assetPathOverride}}{{data.assetPathOverride}}{{else}}./assets{{/if}}/page.css?t={{@root.globals.buildTime}}" rel="stylesheet" type="text/css">
+
+    {{/if}}
+
+    <meta content="width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1" name="viewport">
+
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+
+    {{! meta title}}
+    {{#if lang.meta.title}}
+      <title>title</title>
+    {{/if}}
+
+    {{! meta description}}
+    <meta content="asdf" name="description">
+
+  </head>
+
+  <body {{#if page}} id="page-{{page}}"{{/if}}>

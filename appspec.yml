@@ -1,0 +1,45 @@
+version: 0.0
+os: linux
+files:
+  - source: /src
+    destination: /var/www/src
+  - source: /server.js
+    destination: /var/www
+  - source: /package.json
+    destination: /var/www
+permissions:
+  - object: /var/www
+    pattern: "**"
+    owner: node-app-files
+    group: node-app
+    mode: 750
+    type:
+      - directory
+  - object: /var/www
+    pattern: "**"
+    owner: node-app-files
+    group: node-app
+    mode: 640
+    type:
+      - file
+hooks:
+  ApplicationStop:
+    - location: scripts/applicationStop.sh
+      timeout: 180
+      runas: node-app-run
+  ApplicationStart:
+    - location: scripts/applicationStart.sh
+      timeout: 180
+      runas: node-app-run
+  AfterInstall:
+    - location: scripts/afterInstall.sh
+      timeout: 180
+      runas: node-app-files
+    - location: scripts/cleanupOldDeploys.sh
+      timeout: 180
+  BeforeInstall:
+    - location: scripts/beforeInstall.sh
+      timeout: 180
+  ValidateService:
+    - location: scripts/validateService.sh
+      timeout: 60

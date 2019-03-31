@@ -1,0 +1,17 @@
+{
+  "verbose": true,
+  "ext": "js json less hbs",
+  "ignoreRoot": [
+    ".cache",
+    "vendor",
+    "ionicons",
+    ".git",
+    "node_modules",
+    "bower_components",
+    ".sass-cache"
+  ],
+  "watch": [
+    "src",
+    "configs.json"
+  ]
+}

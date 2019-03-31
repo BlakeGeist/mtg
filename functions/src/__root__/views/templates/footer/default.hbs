@@ -1,0 +1,40 @@
+<footer id="templateFooter">
+
+  <div class="container">
+
+    <div class="country-region-selects">
+
+      <label for="language">{{translate 'LANGUAGE'}}:</label>
+
+      <select
+        class="country-region-selects-select"
+        data-select-target="language"
+        name="Language"
+        >
+
+        {{#if settings.languages}}
+
+          {{#eachProperty settings.languages}}
+
+            <option
+              value="{{key}}"
+              {{#is key ../settings.language}}
+                selected="selected"
+              {{/is}}
+              >
+
+              {{value}}
+
+            </option>
+
+          {{/eachProperty}}
+
+        {{/if}}
+
+      </select>
+
+    </div>
+
+  </div>
+
+</footer>

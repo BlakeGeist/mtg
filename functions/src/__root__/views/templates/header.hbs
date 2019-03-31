@@ -1,0 +1,103 @@
+<header id="main-header">
+
+  <div class="container">
+
+    <div class="logo">
+
+      <a
+        href="/{{settings.region}}/{{settings.language}}"
+        >
+        {{translate 'HOME'}}
+      </a>
+
+    </div>
+
+    <div>
+
+    <div class="menu-items">
+
+      {{#if fireUser.email}}
+
+        <a
+          href="/{{settings.region}}/{{settings.language}}/admin/"
+          >
+          {{translate 'ADMIN'}}
+        </a>
+
+        <span>|</span>
+
+        <a
+          data-auth="sign-out"
+          href=""
+          >
+          {{translate 'SIGN-OUT'}}
+        </a>
+
+      {{else}}
+
+      <span>
+
+          <a
+            data-toggle-expander
+            href=""
+            >
+
+            {{translate 'LOGIN'}}
+
+          </a>
+
+          <div class="is-expanded mod-sign-in">
+
+            <div class="is-expanded-content">
+
+              <div>{{translate 'LOGIN'}}</div>
+
+              {{>
+                partials/forms/email-pass
+                mod="sign-in"
+              }}
+
+            </div>
+
+          </div>
+
+        </span>
+
+        <span>|</span>
+
+        <span>
+
+          <a
+          data-toggle-expander
+
+            href="/{{settings.region}}/{{settings.language}}/register/"
+            >
+
+            {{translate 'SIGN-UP'}}
+
+          </a>
+
+          <div class="is-expanded mod-sign-in">
+
+            <div class="is-expanded-content">
+
+              <div>{{translate 'SIGN-UP'}}</div>
+
+              {{>
+                partials/forms/email-pass
+                mod="sign-up"
+              }}
+
+            </div>
+
+          </div>
+
+        </span>
+
+      {{/if}}
+
+    </div>
+
+  </div>
+
+</header>

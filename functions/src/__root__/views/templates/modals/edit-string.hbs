@@ -1,0 +1,53 @@
+<div class="modal-close">
+
+  <h1>Edit String</h1>
+
+  <a
+    data-role="modal-close"
+    href=""
+    >
+    X
+  </a>
+
+</div>
+
+<form
+  data-strings-edit="{{data.string._id}}"
+  >
+
+  {{#each data.string}}
+
+    {{#isnt @key '_id'}}
+
+      <div>
+
+        <div>
+
+          <label
+            for="{{@key}}"
+            >
+
+            {{@key}}
+
+          </label>
+
+        </div>
+
+        <input
+          id="{{@key}}"
+          name="{{@key}}"
+          type="textarea"
+          value="{{this}}"
+          />
+
+      </div>
+
+    {{/isnt}}
+
+  {{/each}}
+
+  <input
+    type="submit"
+    />
+
+</form>

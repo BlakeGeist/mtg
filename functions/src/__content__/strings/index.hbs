@@ -1,0 +1,50 @@
+{{>templates/open page='strings'}}
+
+{{>templates/header}}
+
+<main class="strings-page">
+
+  <div class="container">
+
+    <h1>Strings</h1>
+
+    <hr />
+
+    <form
+      data-form="string"
+      >
+
+      <input
+        name="name"
+        type="input"
+        />
+
+      <input
+        name="value"
+        type="input"
+        />
+
+        |
+
+        <input
+          type="submit"
+          value="submit"
+          />
+
+      </form>
+
+    <hr />
+
+    {{#each strings}}
+
+        <p>{{this._id}}</p>
+
+    {{/each}}
+
+  </div>
+
+</main>
+
+{{>templates/footer}}
+
+{{>templates/close}}

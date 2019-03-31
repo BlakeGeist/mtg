@@ -1,0 +1,70 @@
+{
+  "name": "frontend",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "buffer-from": "^1.1.1",
+    "cheerio": "^0.22.0",
+    "co": "^4.5.4",
+    "co-body": "^4.0.0",
+    "co-wait": "0.0.0",
+    "co-waiter": "^1.0.2",
+    "cors": "^2.8.5",
+    "cssmin": "^0.4.3",
+    "debug": "^2.2.0",
+    "denodeify": "^1.2.1",
+    "dotenv": "^2.0.0",
+    "firebase": "^5.9.0",
+    "firebase-admin": "^7.1.0",
+    "fs-promise": "^0.3.1",
+    "handlebars": "^3.0.6",
+    "i": "^0.3.3",
+    "json-stable-stringify": "^1.0.0",
+    "koa": "^1.1.2",
+    "koa-mount": "^1.3.0",
+    "koa-router": "^5.2.3",
+    "koa-send": "^3.3.0",
+    "koa-session": "^5.10.1",
+    "koa-static": "^1.5.2",
+    "less": "^2.5.1",
+    "lodash": "^3.9.3",
+    "mime-types": "^2.1.22",
+    "mkdirp": "^0.5.1",
+    "mkdirp-promise": "^1.0.3",
+    "moment": "^2.24.0",
+    "pdf-maker": "0.0.2",
+    "query-string": "4.2.0",
+    "recursive-readdir": "^1.2.1",
+    "recursive-readdir-sync": "^1.0.6",
+    "redis": "^2.3.1",
+    "request": "2.80.0",
+    "request-promise": "^0.4.3",
+    "swag": "^0.7.0",
+    "uglify-js": "^2.6.1"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.423.0",
+    "chalk": "^1.1.1",
+    "gulp-develop-server": "^0.5.0",
+    "gulp-livereload": "^3.8.0",
+    "gulp-shell": "^0.5.1",
+    "nodemon": "^1.18.10"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --harmony server.js",
+    "dev": "nodemon --harmony server.js | bunyan"
+  },
+  "author": "",
+  "license": "",
+  "semistandard": {
+    "ignore": [
+      "vendor/*",
+      "spec/*"
+    ]
+  },
+  "engines": {
+    "node": "v10.13.0"
+  }
+}

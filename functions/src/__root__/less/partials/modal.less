@@ -1,0 +1,66 @@
+@import '../context';
+
+.modal-backdrop {
+  .align-items(center);
+  .justify-content(center);
+  position: fixed;
+  display: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99999999;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: default;
+  top: 0;
+  overflow: auto;
+  html.has-modal & { .flex-display; }
+}
+
+body {
+
+  //> header, > footer, > main {
+   // filter: blur(0);
+    //-webkit-filter: blur(0);
+  //}
+
+  &.has-modal {
+    > header, > footer, > main {
+      filter: blur(1rem);
+      -webkit-filter: blur(1rem);
+    }
+  }
+}
+
+.modal {
+  .flex(0 1 375px);
+  cursor: default;
+  overflow: hidden;
+  position: relative;
+  border: 0;
+  margin: 0 auto;
+  z-index: 1010;
+  padding: 15px 25px;
+  display: none;
+  .body {
+    overflow: hidden;
+  }
+}
+
+.has-modal {
+  .modal {
+    background-color: #fff;
+    border-radius: 5px;
+    display: block;
+    margin:0;
+    input{
+      box-sizing : border-box;
+      width: 100%;
+    }
+  }
+}
+
+.modal-close{
+  .align-items(center);
+  .flex-display;
+  .justify-content(space-between);
+}

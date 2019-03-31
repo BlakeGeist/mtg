@@ -1,0 +1,10 @@
+{{!if the whitelabel hasCustomFooter is true show custom footer}}
+{{!this is going to look for a file that shares a name with the}}
+{{! whitelabel in the /templates/footer/ directory}}
+{{#is settings.hasCustomFooter true}}
+  {{footer}}
+{{/is}}
+{{!if the whitelabel hasCustomeFooter is NOT true show default footer}}
+{{#isnt settings.hasCustomFooter true}}
+  {{>templates/footer/default }}
+{{/isnt}}

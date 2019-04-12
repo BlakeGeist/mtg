@@ -10,7 +10,7 @@
   var C = site.commands;
   var E = site.events;
   var USER;
-
+  var paginationTarget =
 
   preDomReady();
 
@@ -33,10 +33,19 @@
 
   function initEvents() {
     E.on('global:ready', ready);
+    E.on('api:complete:paginateCards', handleCardPaginatedCardsResponse);
   }
 
   function ready() {
 
+    $(document).on('click', '[data-init-cards-pagination]', function(e){
+      H.stopEvents(e)
+      var target = $('[data-init-cards-pagination]').data('init-cards-pagination');
+      var payload = {
+        startAfter: target
+      }
+      C.run('api:paginateCards', payload);
+    });
 
     $(document).on('change', '[data-target="sets-select"]', function(e){
       var targetSet = $(this).find(":selected").val();
@@ -93,6 +102,17 @@
   });
 
   function initUIForUser(user) {
+  }
+
+
+  function handleCardPaginatedCardsResponse(xhr) {
+    var cards = xhr.responseJSON;
+    var cardsContainer = $('.cards');
+    $('.cards-button').remove();
+    var template = H.renderPartial('cards', {
+      cards: cards
+    });
+    cardsContainer.append(template)
   }
 
 })(window, document, site, window.Handlebars);

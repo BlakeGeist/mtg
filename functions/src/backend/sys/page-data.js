@@ -103,39 +103,58 @@ async function getUser (varients, slug) {
 
 
 function * getFirePageData (ctx) {
-  const path = _.get(ctx.state, 'page.path');  
-  const slug = ctx.state.relativeUrl.replace('set/', '').replace(/\/.*$/, '');
-  console.log(ctx.state.relativeUrl);
-  console.log('blake-009')
-  console.log(slug);
+
+  const urlSplit = ctx.state.relativeUrl.split('/');
+
+  const set = urlSplit[1];
+  const slug = urlSplit[3];
 
   var data = {}
 
-  if (!path || path.indexOf('set/') !== 0) return {};
-
-  yield db.collection('sets').doc(slug).get()
-    .then(async (response) => {
-      data = response.data();
-      await db.collection('cards').where("set", "==", slug).limit(50).get()
-        .then((querySnapshot) => {
-          var payload = []
-          querySnapshot.forEach(function(doc) {
-              // doc.data() is never undefined for query doc snapshots
-              payload.push(doc.data())
+  if(urlSplit[2] == 'card') {
+    yield db.collection('sets').doc(set).get()
+      .then(async (response) => {
+        data = response.data();
+        await db.collection('cards').where("set", "==", set).where("slug", "==", slug).get()
+          .then((querySnapshot) => {
+            var payload = {}
+            querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                payload = doc.data();
+            });
+            data.card = payload;
+          })
+          .catch(function(error) {
           });
-          data.cards = payload
 
-        })
-        .catch(function(error) {
-        });
+      })
+      .catch(function(error) {
+        res.status(500).send(error)
+      });
+  } else if(urlSplit[0] == 'set') {
+    yield db.collection('sets').doc(set).get()
+      .then(async (response) => {
+        data = response.data();
+        await db.collection('cards').where("set", "==", set).limit(50).get()
+          .then((querySnapshot) => {
+            var payload = []
+            querySnapshot.forEach(function(doc) {
+                // doc.data() is never undefined for query doc snapshots
+                payload.push(doc.data())
+            });
+            data.cards = payload
 
-    })
-    .catch(function(error) {
-      res.status(500).send(error)
-    });
+          })
+          .catch(function(error) {
+          });
+
+      })
+      .catch(function(error) {
+        res.status(500).send(error)
+      });
+  }
 
   ctx.state.firePageData = data;
-
 
   if(ctx.state.firePageData) {
     return ctx.state.firePageData
@@ -146,7 +165,7 @@ function * getFirePageData (ctx) {
 
 function * getAsyncFireMeta () {
   const asyncMeta = yield {
-    fireData: yield getFireDataItem('cards', 100),
+    fireData: yield getFireDataItem('cards', 50),
     fireStrings: yield getFireDataItem('strings', 9999),
     fireProducts: yield getFireDataItem('products', 9999),
     fireSets: yield getFireDataItem('sets', 99999),

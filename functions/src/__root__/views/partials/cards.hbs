@@ -1,0 +1,20 @@
+{{#each cards as |card index|}}
+
+  {{>partials/card card=card region=../settings.region language=../settings.language}}
+
+  {{#if @last}}
+
+    <div class="cards-button">
+
+      <a
+        data-init-cards-pagination={{card.multiverseid}}
+        href=""
+        >
+        MORE CARDS
+      </a>
+
+    </div>
+
+  {{/if}}
+
+{{/each}}

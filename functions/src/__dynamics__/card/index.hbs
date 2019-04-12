@@ -14,11 +14,15 @@
 
     <div>Type: {{this.firePageData.type}}</div>
 
-    <div>Block: {{this.firePageData.block}}</div>
+    {{#if this.firePageData.block}}
+      <div>Block: {{this.firePageData.block}}</div>
+    {{/if}}
 
-    <div class="cards">
+    <div class="card">
 
-      {{> partials/cards cards=firePageData.cards}}
+      <div>Name: {{firePageData.card.name}}</div>
+
+      <div><img src="{{firePageData.card.imageUrl}}" /></div>
 
     </div>
 

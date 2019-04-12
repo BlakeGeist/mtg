@@ -14,16 +14,20 @@
 
         {{#each sets as |set index|}}
 
-          <option
-            value="{{set.code}}"
-            {{#is  ../firePageData.code set.code}}
-              selected="selected"
+          {{#is set.isActive 'true'}}
+
+            <option
+              value="{{set.code}}"
+              {{#is  ../firePageData.code set.code}}
+                selected="selected"
+              {{/is}}
+              >
+
+                {{set.name}}
+
+            </option>
+
             {{/is}}
-            >
-
-              {{set.name}}
-
-          </option>
 
         {{/each}}
 

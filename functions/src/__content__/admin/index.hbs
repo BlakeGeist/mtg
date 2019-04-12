@@ -93,6 +93,90 @@
 
     </section>
 
+    <section class="sets">
+
+      <h2>Sets</h2>
+
+      <table>
+
+        <tr>
+
+          <th>Name</th>
+
+          <th>isActive</th>
+
+          <th>Import Set</th>
+
+        </tr>
+
+        {{#each sets as |set index|}}
+
+          <tr class="set" data-set={{set.code}}>
+
+            <td class="set-info mod-name">
+
+              <a href="/{{../settings.region}}/{{../settings.language}}/set/{{set.code}}/">{{set.name}}</a>
+
+            </td>
+
+            <td class="set-info mod-isActive">
+
+            {{#if set.isImported}}
+
+              <a
+                data-update-set="toggleActive"
+                href=""
+                >
+
+                {{#if set.isActive}}
+
+                  {{set.isActive}}
+
+                {{else}}
+
+                  false
+
+                {{/if}}
+
+              </a>
+
+            {{else}}
+
+                false
+
+            {{/if}}
+
+            </td>
+
+            <td class="set-info mod-name">
+
+              <a
+                data-import-set="{{set.code}}"
+                href=""
+                >
+
+                {{#if set.isImported}}
+
+                  Re-Import
+
+                {{else}}
+
+                  Import
+
+                {{/if}}
+
+              </a>
+
+            </td>
+
+          </tr>
+
+        {{/each}}
+
+      </table>
+
+    </section>
+
   </div>
 
 </main>

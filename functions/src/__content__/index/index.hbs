@@ -10,11 +10,7 @@
 
     <div class="cards">
 
-      {{#each fireBaseData as |card index|}}
-
-        {{>partials/card card=card}}
-
-      {{/each}}
+      {{> partials/cards cards=fireBaseData}}
 
     </div>
 

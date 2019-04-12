@@ -17,7 +17,9 @@
 
   function initEvents(){
     E.on('global:ready', ready);
-    E.on('me:loggedIn', userCheck)
+    E.on('me:loggedIn', userCheck);
+    E.on('api:complete:importCardsFromSet', handleImportCardsFromSet);
+    E.on('api:complete:updateSet', handleImportCardsFromSet);
   }
 
   function userCheck() {
@@ -28,6 +30,27 @@
   }
 
   function ready(){
+
+    $(document).on('click', '[data-update-set="toggleActive"]', function(e){
+      H.stopEvents(e);
+      var currentTruth = $.parseJSON($(this).text());
+      var targetSet = $(this).closest('[data-set]').data('set');
+      var toggledTruth = !currentTruth;
+      var payload = {
+        isActive: toggledTruth,
+        set: targetSet
+      }
+      C.run('api:updateSet', payload);
+    });
+
+    $(document).on('click', '[data-import-set]', function(e){
+      H.stopEvents(e);
+      var payload = {
+        set: $(this).data('import-set')
+      }
+      C.run('api:importCardsFromSet', payload);
+    });
+
     $(document).on('submit', '[data-form-add="collection"]', function(event) {
       H.stopEvents(event);
       var formData = H.getFormData(this);
@@ -65,6 +88,10 @@
       var formData = H.getFormData(this);
       console.log(formData);
     })
+  }
+
+  function handleImportCardsFromSet(xhr){
+    location.reload();
   }
 
 })(window, window.site, window.jQuery);

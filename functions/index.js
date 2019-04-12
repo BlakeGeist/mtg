@@ -49,6 +49,44 @@ function component (name) {
 
 exports.api = functions.https.onRequest(app.callback());
 
+exports.paginateCards = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    const db = admin.app().firestore();
+    var set = req.query.set;
+    var startAfter = req.query.startAfter;
+    var endAt = req.query.endAt;
+    var data = {};
+
+    var first = await db.collection('cards').doc(startAfter).get()
+      .then(response => {
+        return response;
+      })
+
+    var query = db.collection('cards')
+
+    if(set) {
+      query = query.where("set", "==", set)
+    }
+
+    query = query.orderBy('multiverseid').startAfter(first).limit(50)
+
+    query.get()
+      .then((querySnapshot) => {
+        var payload = []
+        querySnapshot.forEach(function(doc) {
+          // doc.data() is never undefined for query doc snapshots
+          console.log(doc.id, " => ", doc.data());
+          payload.push(doc.data())
+        });
+        data = payload;
+        res.status(200).send(data)
+      })
+      .catch(function(error) {
+        res.status(500).send(error)
+      });
+  });
+});
+
 exports.getSetBySlug = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     const db = admin.app().firestore();
@@ -78,7 +116,6 @@ exports.getSetBySlug = functions.https.onRequest((req, res) => {
       });
   });
 });
-
 
 const database = admin.database();
 var adminFirestore = admin.app().firestore();
@@ -159,9 +196,42 @@ exports.importSets = functions.https.onRequest((req, res) => {
   });
 });
 
-exports.assets = functions.https.onRequest((req, res) => {
+exports.asset = functions.https.onRequest((req, res) => {
  console.log(req)
- res.status(200).send('here');
+ res.status(200).send('her3e');
+ console.log('test-fish')
+});
+
+exports.updateSet = functions.https.onRequest((req, res) => {
+  cors(req, res, () => {
+    const db = admin.app().firestore();
+
+    var set = req.query.set;
+    var data = {}
+    for (var propName in req.query) {
+      if (req.query.hasOwnProperty(propName) && propName !== 'set') {
+        data[propName] = req.query[propName]
+      }
+    }
+
+    console.log(data)
+
+    db.collection('sets').doc(set).update(data)
+      .then((response) => {
+        var updatedSet = db.collection('sets').doc(set);
+        updatedSet.get()
+          .then((doc) => {
+            console.log(doc.data())
+            res.status(200).send(doc.data());
+          })
+          .catch(function (err) {
+            res.status(500).send(error)
+          });
+      })
+      .catch(function (err) {
+        res.status(500).send(error)
+      });
+  });
 });
 
 exports.importSet = functions.https.onRequest((req, res) => {
@@ -171,11 +241,11 @@ exports.importSet = functions.https.onRequest((req, res) => {
     var set = req.query.set;
     var apiUrl = 'https://api.magicthegathering.io/v1/sets/' + set
     var options = {
-        uri: apiUrl,
-        headers: {
-            'User-Agent': 'Request-Promise'
-        },
-        json: true // Automatically parses the JSON string in the response
+      uri: apiUrl,
+      headers: {
+        'User-Agent': 'Request-Promise'
+      },
+      json: true // Automatically parses the JSON string in the response
     }
 
     rp(options)
@@ -184,7 +254,7 @@ exports.importSet = functions.https.onRequest((req, res) => {
         if(set){
           console.log(set)
           delete set.booster;
-          db.collection('sets').doc(set.code).set(set)
+          db.collection('sets').doc(set.code).set(setimportCardsFromSet)
             .then(function() {
               res.status(200).send(response);
               return
@@ -193,7 +263,6 @@ exports.importSet = functions.https.onRequest((req, res) => {
               res.status(500).send(error)
             });
         } else {
-          res.status(500).send(error)
         }
 
       })
@@ -207,6 +276,14 @@ exports.importSet = functions.https.onRequest((req, res) => {
 exports.importCardsFromSet = functions.https.onRequest((req, res) => {
   cors(req, res, () => {
     var set = req.query.set;
+
+    const db = admin.app().firestore();
+    var payload = {
+      isImported: true
+    }
+
+    db.collection('sets').doc(set).update(payload)
+
     var page = 1;
     if(getCardsBySetFromMtgApi(set, page)) {
       res.status(200).send('success!')
@@ -264,6 +341,7 @@ async function getCardsBySetFromMtgApi(set, page) {
 
 function sendCardToFireBase(card){
   const db = admin.app().firestore();
+  card.slug = convertToSlug(card.name);
   db.collection('cards').doc(card.multiverseid.toString()).set(card)
     .then(function() {
       return
@@ -271,4 +349,12 @@ function sendCardToFireBase(card){
     .catch(function(error) {
       res.status(500).send(error)
     });
+}
+
+function convertToSlug(text){
+  return text
+      .toLowerCase()
+      .replace(/[^\w ]+/g,'')
+      .replace(/ +/g,'-')
+      ;
 }

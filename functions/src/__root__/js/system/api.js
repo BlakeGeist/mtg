@@ -36,6 +36,20 @@
   }
 
   //create collection/table for this site
+  site.api.register('updateSet', updateSet);
+  function updateSet(params, success, error, complete) {
+    var apiCall = ('updateSet').toString();
+    return this.api(httpMethod.get, apiCall, params, success, error, complete);
+  }
+
+  //create collection/table for this site
+  site.api.register('paginateCards', paginateCards);
+  function paginateCards(params, success, error, complete) {
+    var apiCall = ('paginateCards').toString();
+    return this.api(httpMethod.get, apiCall, params, success, error, complete);
+  }
+
+  //create collection/table for this site
   site.api.register('getSetBySlug', getSetBySlug);
   function getSetBySlug(params, success, error, complete) {
     var apiCall = ('getSetBySlug').toString();
@@ -60,7 +74,6 @@
     var apiCall = ('sessionLogin').toString();
     return this.api(httpMethod.get, apiCall, params, success, error, complete);
   }
-
 
   //create collection/table for this site
   site.api.register('auth:sign-in', signIn);

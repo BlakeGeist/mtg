@@ -1,0 +1,35 @@
+<div class="modal-close">
+
+  <h1>Edit Set</h1>
+
+  <a
+    data-role="modal-close"
+    href=""
+    >
+    X
+  </a>
+
+</div>
+
+<form
+  data-form-update="set"
+  >
+
+  <input
+    name="set"
+    type="hidden"
+    value="{{data.set.code}}"
+    />
+
+  <input
+    name="mtgLink"
+    placeholder="https://magic.wizards.com/"
+    type="text"
+    value="{{data.set.mtgLink}}"
+    />
+
+  <input
+    type="submit"
+    />
+
+</form>

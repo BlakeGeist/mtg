@@ -6,7 +6,7 @@
 
   <div class="container">
 
-    <div>Set: {{this.firePageData.name}}</div>
+    <div>Set: <a data-edit-set="{{this.firePageData.code}}" href="">{{this.firePageData.name}}</a></div>
 
     <div>Code: {{this.firePageData.code}}</div>
 
@@ -14,7 +14,21 @@
 
     <div>Type: {{this.firePageData.type}}</div>
 
-    <div>Block: {{this.firePageData.block}}</div>
+    {{#if this.firePageData.block}}
+
+      <div>Block: {{this.firePageData.block}}</div>
+
+    {{/if}}
+
+    <div>
+
+      {{#if this.firePageData.mtgLink}}
+
+        MTG Link: <a href="{{this.firePageData.mtgLink}}" target="_blank">{{this.firePageData.mtgLink}}</a>
+
+      {{/if}}
+
+    </div>
 
     <div class="cards">
 

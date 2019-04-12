@@ -20,32 +20,25 @@
 
   function initEvents(){
     E.on('global:ready', ready);
-    //E.on('api:complete:getSetBySlug', setContext);
+    E.on('api:complete:updateSet', handleSetUpdateResponse);
   }
 
   function ready() {
-    $(document).on('click', '[data-import-set]', function(e){
+    $(document).on('click', '[data-edit-set]', function(e){
       H.stopEvents(e);
-      var payload = {
-        set: $(this).data('import-set')
-      }
-      C.run('api:importCardsFromSet', payload);
+      var slug = $(this).data('edit-set');
+      var set = site.context.firePageData;
+
+      console.log(set)
+
+      C.run('modal:open', 'edit-set', {
+        set: set
+      })
     });
   }
 
-  function setContext(data){
-    var payload = data.responseJSON;
-    site.context.firePageData = payload;
-
-    _.each(payload.cards, function(card){
-      var template = H.renderPartial('card', {
-        card: card
-      })
-
-      $('.cards').append(template)
-
-    })
-
+  function handleSetUpdateResponse(xhr){
+    location.reload();
   }
 
 })(window, window.site);

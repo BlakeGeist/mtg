@@ -85,6 +85,12 @@
       event.stopPropagation();
       C.run('modal:close');
     });
+
+    $(document).on('submit', '[data-form-update="set"]', function(e){
+      H.stopEvents(e)
+      var formData = H.getFormData(this);
+      C.run('api:updateSet', formData);
+    });
   }
 
   $(document).on('click', '[data-toggle-expander]', function(e){

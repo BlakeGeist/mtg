@@ -177,6 +177,7 @@ exports.importSets = functions.https.onRequest((req, res) => {
           if(set){
             console.log(set)
             delete set.booster;
+            set.slug = convertToSlug(set.name);
             await db.collection('sets').doc(set.code).set(set)
               .then(function() {
                 return
@@ -213,8 +214,6 @@ exports.updateSet = functions.https.onRequest((req, res) => {
         data[propName] = req.query[propName]
       }
     }
-
-    console.log(data)
 
     db.collection('sets').doc(set).update(data)
       .then((response) => {

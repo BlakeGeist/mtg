@@ -34,9 +34,19 @@
   function initEvents() {
     E.on('global:ready', ready);
     E.on('api:complete:paginateCards', handleCardPaginatedCardsResponse);
+    E.on('api:complete:updateSet', handleSetUpdateResponse);
   }
 
   function ready() {
+
+    $(document).on('click', '[data-edit-set]', function(e){
+      H.stopEvents(e);
+      var slug = $(this).data('edit-set');
+      var set = site.context.sets[slug];
+      C.run('modal:open', 'edit-set', {
+        set: set
+      })
+    });
 
     $(document).on('click', '[data-init-cards-pagination]', function(e){
       H.stopEvents(e)
@@ -119,6 +129,10 @@
       cards: cards
     });
     cardsContainer.append(template)
+  }
+
+  function handleSetUpdateResponse(xhr){
+    location.reload();
   }
 
 })(window, document, site, window.Handlebars);

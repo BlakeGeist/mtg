@@ -37,6 +37,12 @@
 
   function ready() {
 
+
+    $(document).on('change', '[data-target="sets-select"]', function(e){
+      var targetSet = $(this).find(":selected").val();
+      C.run('navigate:page', 'set/' + targetSet);
+    })
+
     $(document).on('change', '[data-select-target="language"]', function(event){
       var targetLanguage = $(this).find(":selected").val();
       C.run('navigate:language', targetLanguage);

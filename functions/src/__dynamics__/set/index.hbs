@@ -6,11 +6,25 @@
 
   <div class="container">
 
-    <h1>{{translate 'proposal'}}</h1>
+    <div>Set: <a data-import-set="{{this.firePageData.code}}" href="">{{this.firePageData.name}}</a></div>
 
-    <p><strong>Title:</strong> {{data.product.name}}</p>
+    <div>Code: {{this.firePageData.code}}</div>
 
-    <p><strong>Slug:</strong> {{data.product.slug}}</p>
+    <div>Release Date: {{this.firePageData.releaseDate}}</div>
+
+    <div>Type: {{this.firePageData.type}}</div>
+
+    <div>Block: {{this.firePageData.block}}</div>
+
+    <div class="cards">
+
+      {{#each this.firePageData.cards as |card index|}}
+
+        {{>partials/card card=card}}
+
+      {{/each}}
+
+    </div>
 
   </div>
 

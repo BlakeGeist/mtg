@@ -35,6 +35,19 @@
   return "";
   }
 
+  //create collection/table for this site
+  site.api.register('getSetBySlug', getSetBySlug);
+  function getSetBySlug(params, success, error, complete) {
+    var apiCall = ('getSetBySlug').toString();
+    return this.api(httpMethod.get, apiCall, params, success, error, complete);
+  }
+
+  //create collection/table for this site
+  site.api.register('importCardsFromSet', importCardsFromSet);
+  function importCardsFromSet(params, success, error, complete) {
+    var apiCall = ('importCardsFromSet').toString();
+    return this.api(httpMethod.get, apiCall, params, success, error, complete);
+  }
 
   var apiRoot = 'https://us-central1-mtg-collections.cloudfunctions.net/';
   if(window.location.hostname == 'localhost'){

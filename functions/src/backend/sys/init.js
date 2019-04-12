@@ -47,6 +47,7 @@ global.PATHS = PATHS;
 const configs = require(PATHS.configs);
 
 function * middleware (next) {
+
   const _st = this.state;
   const hostname = this.hostname;
   _st.url = urlLib.parse(this.url);

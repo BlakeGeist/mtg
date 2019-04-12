@@ -1,7 +1,7 @@
 {{{@root.globals.scriptTags.early}}}
 
 <script src="/{{settings.region}}/{{settings.language}}/context.js?t={{@root.globals.contextTime}}" data-cfasync="false"></script>
-<script src="/assets/page-context.js?t={{@root.globals.contextTime}}" data-cfasync="false"></script>
+<script src="./assets/page-context.js?t={{@root.globals.contextTime}}" data-cfasync="false"></script>
 
 <!-- all platform-global scripts that ARE vendor -->
 {{{@root.globals.scriptTags.vendor}}}
@@ -15,4 +15,4 @@
 <!-- all platform-global scripts that ARE NOT vendor -->
 {{{@root.globals.scriptTags.platform}}}
 
-<script src="{{#if data.assetPathOverride}}{{data.assetPathOverride}}{{else}}/assets{{/if}}/page.js?t={{@root.globals.buildTime}}" data-cfasync="false"></script>
+<script src="{{#if data.assetPathOverride}}{{data.assetPathOverride}}{{else}}./assets{{/if}}/page.js?t={{@root.globals.buildTime}}" data-cfasync="false"></script>

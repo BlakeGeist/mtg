@@ -18,10 +18,12 @@
       "**/.*",
       "**/node_modules/**"
     ],
-    "rewrites": [{
-      "source": "**",
-      "function": "api"
-    }]
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "api"
+      }
+    ]
   },
   "storage": {
     "rules": "storage.rules"

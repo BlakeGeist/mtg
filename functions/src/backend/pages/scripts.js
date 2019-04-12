@@ -59,6 +59,8 @@ function * pageContextJSMiddleware (next) {
   this.body = bufferFrom(squish.js(yield template.call(this, 'page-context-js', tplArgs)));
 }
 
+
+
 function setup (app, router) {
   app.use(pageJSMiddleware);
   app.use(contextJSMiddleware);

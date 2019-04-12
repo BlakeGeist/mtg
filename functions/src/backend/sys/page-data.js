@@ -57,9 +57,9 @@ function * getPageData () {
   return pageData;
 }
 
-async function getFireDataItem(callTarget){
+async function getFireDataItem(callTarget, limit){
   const fireData = {};
-  await db.collection(callTarget).limit(100)
+  await db.collection(callTarget).limit(limit)
     .get()
     .then(query=>{
         let data = query.docs.map(doc=>{
@@ -102,19 +102,56 @@ async function getUser (varients, slug) {
 }
 
 
-async function getFirePageData (varients, slug) {
-  var user = {test: 'test'};
-  return user;
+function * getFirePageData (ctx) {
+  const path = _.get(ctx.state, 'page.path');  
+  const slug = ctx.state.relativeUrl.replace('set/', '').replace(/\/.*$/, '');
+  console.log(ctx.state.relativeUrl);
+  console.log('blake-009')
+  console.log(slug);
 
+  var data = {}
+
+  if (!path || path.indexOf('set/') !== 0) return {};
+
+  yield db.collection('sets').doc(slug).get()
+    .then(async (response) => {
+      data = response.data();
+      await db.collection('cards').where("set", "==", slug).limit(50).get()
+        .then((querySnapshot) => {
+          var payload = []
+          querySnapshot.forEach(function(doc) {
+              // doc.data() is never undefined for query doc snapshots
+              payload.push(doc.data())
+          });
+          data.cards = payload
+
+        })
+        .catch(function(error) {
+        });
+
+    })
+    .catch(function(error) {
+      res.status(500).send(error)
+    });
+
+  ctx.state.firePageData = data;
+
+
+  if(ctx.state.firePageData) {
+    return ctx.state.firePageData
+  } else {
+    return {}
+  }
 }
 
 function * getAsyncFireMeta () {
   const asyncMeta = yield {
-    fireData: yield getFireDataItem('cards'),
-    fireStrings: yield getFireDataItem('strings'),
-    fireProducts: yield getFireDataItem('products'),
-    firePosts: yield getFireDataItem('posts'),
-    fireSiteSettings: yield fireSettings()
+    fireData: yield getFireDataItem('cards', 100),
+    fireStrings: yield getFireDataItem('strings', 9999),
+    fireProducts: yield getFireDataItem('products', 9999),
+    fireSets: yield getFireDataItem('sets', 99999),
+    fireSiteSettings: yield fireSettings(),
+    firePageDatas: yield getFirePageData(this)
   };
   return asyncMeta;
 }
@@ -192,11 +229,10 @@ function * getTemplateArguments (extend) {
   const _st = this.state;
   const fireMeta = yield getAsyncFireMeta.call(this);
   const fireUser = yield getUser.call(this);
-  const firePageData = yield getFirePageData.call(this);
   const data = yield {
     meta: this.getMeta(this),
     fireBaseData: fireMeta.fireData,
-    siteSettings: fireMeta.fireSiteSettings
+    siteSettings: fireMeta.fireSiteSettings,
   };
 
   const tplArgs = {
@@ -204,11 +240,11 @@ function * getTemplateArguments (extend) {
     whitelabel: {
       name: data.meta.whitelabelText // had to add this now that whitelabel.name is happening via reprocess
     },
-    data: firePageData,
+    firePageData: fireMeta.firePageDatas,
     fireBaseData: fireMeta.fireData,
     strings: fireMeta.fireStrings,
     products: fireMeta.fireProducts,
-    posts: fireMeta.firePosts,
+    sets: fireMeta.fireSets,
     siteSettings: fireMeta.fireSiteSettings,
     fireUser: fireUser,
     settings: {
